@@ -33,7 +33,7 @@ export class BebidaAlcoolica extends Produto {//Isso significa: BebidaAlcoolica 
     //Método visualizar sobrescrito(Polimorfismo)
     public visualizar(): void {
         super.visualizar();//Pega o método visualizar do produto para exibir os dados do produto
-       console.log(`Limite da conta: R$ ${(this._alcoolica)}`)//this.alcoolica acessa o método get alcoolica para exibir o tipo de bebida 
+       console.log(`Tipo de Produto: R$ ${(this._alcoolica)}`)//this.alcoolica acessa o método get alcoolica para exibir o tipo de bebida 
     }
 
 }

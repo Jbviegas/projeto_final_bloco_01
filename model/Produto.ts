@@ -1,5 +1,6 @@
 import { formatarMoeda } from "../src/util/Currency";
 
+
 export abstract class Produto {
 
     //Os atributos representam as características / dados que cada objeto da classe Produto vai ter.
@@ -92,9 +93,9 @@ export abstract class Produto {
         console.log("\n===============================");
         console.log("\nDados da Conta:");
         console.log("===============================\n");
-        console.log(`Número da Conta: ${this._id}`);//Acessa o método get id, acessa o numero do produto e exibe no painel
-        console.log(`Nome do Titular: ${this._nome}`);//Acessa o método get nome, acessa o nome do produto e exibe no painel
-        console.log(`Tipo de Conta: ${tipo}`);//Acessa o método get tipo, acessa o tipo do produto (Alcoolico, Sem Alcool..) e exibe no painel
-        console.log(`Saldo da conta: R$ ${formatarMoeda(this._preco)}`)// //Acessa o método get preco, acessa o preco e exibe no painel
+        console.log(`ID do Produto: ${this._id}`);//Acessa o método get id, acessa o numero do produto e exibe no painel
+        console.log(`Nome do Produto: ${this._nome}`);//Acessa o método get nome, acessa o nome do produto e exibe no painel
+        console.log(`Tipo de Produto: ${tipo}`);//Acessa o método get tipo, acessa o tipo do produto (Alcoolico, Sem Alcool..) e exibe no painel
+        console.log(`Preço do Produto: R$ ${formatarMoeda(this._preco)}`)// //Acessa o método get preco, acessa o preco e exibe no painel
     }
 }

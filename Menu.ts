@@ -1,6 +1,8 @@
 import { Colors } from "./src/util/Colors";
-import { formatarMoeda } from "./src/util/Currency";
 import { Input } from "./src/util/Input";
+import { ProdutoController } from "./controller/ProdutoController";
+import { BebidaAlcoolica } from "./model/BebidaAlcoolica";
+import { BebidaSemAlcool } from "./model/BebidaSemAlcool";
 
 
 
@@ -9,6 +11,11 @@ import { Input } from "./src/util/Input";
 
 //Criar um objeto global da classe ContaController
 const produtos = new ProdutoController();//Permite a constante produtos acessar ContaController e instanciar seus métodos 
+
+
+// Criar um array contendo os tipos de conta
+const tipoProdutos = ['Bebida Alcoolica', 'bebida Sem Alcool'];
+
 
 // Criar um array contendo os tipos de conta
 const tipoBebidas = ['Alcoolica', 'Sem Alcool'];
@@ -55,17 +62,19 @@ export function main() {
                 break;
             case 2:
                 console.log(Colors.fg.whitestrong, "\n\nListar Todos os Produtos\n\n", Colors.reset);
+
                 produtos.listarProdutos();
+                 keyPress()
                 break;
 
-             case 3:
+            case 3:
                 console.log(Colors.fg.whitestrong, "\n\nListar Produtos Pelo ID(Codigo do Produto)\n\n", Colors.reset);
 
                 listarProdutoPorID();
 
                 keyPress()
                 break;
-           
+
             case 4:
                 console.log(Colors.fg.whitestrong, "\n\nAtualizar Produto\n\n", Colors.reset);
 
@@ -83,7 +92,6 @@ export function main() {
 
             default:
                 console.log(Colors.fg.whitestrong, "\nOpção Inválida!\n", Colors.reset);
-
                 keyPress()
         }
     }
@@ -92,45 +100,56 @@ export function main() {
 
 /* Opção 1: Criar uma nova Conta */
 
-function cadastrarProduto() {
+function cadastrarProduto(): void {
 
-    console.log("Digite o id do produto: ")
+    console.log("Digite o id do produto: ");
     const id = Input.questionInt("");
 
-    console.log("Digite o nome do produto: ")
+    console.log("Digite o nome do produto: ");
     const nome = Input.question("");
 
-    console.log("Selecione o tipo de bebida: ")
-    const tipo = Input.keyInSelect(tipoBebidas, "", { cancel: false }) + 1;//Input.keyInSelect Exibe um menu de opções para o usuário escolher
-    //tipoBebidas é um Array  contendo os tipo de bebidas const tipoBebidas = ['Alcoolica[0]', 'Sem Alcool'[1]];
-    //"" (string vazia) É a mensagem extra que poderia aparecer acima do menu, como está vazia, não aparece nada adicional.
-    //{ cancel: false } Desativa a opção "Cancelar" no menu de opções -> [1] Alcoolica [2] Sem Alcool [3] Cancel
-    //O keyInSelect não retorna 1 ou 2, ele retorna o índice do array: tipoBebidas = ['Alcoolica[0]', 'Sem Alcool'[1]]
-    //+1 ajusta o valor ao switch que vem depois: switch (tipo) { case 1: Alcoolica - case 2: // Sem Alcool}
+    console.log("Selecione o tipo de bebida: ");
+    const tipo = Input.keyInSelect(tipoBebidas, "", { cancel: false }) + 1;
 
-    console.log("Digite o preço do produto: ")
+    console.log("Digite o preço do produto: ");
     const preco = Input.questionFloat("");
 
     switch (tipo) {
-        case 1: // Bebida Alcoolica
-          
+
+        case 1: { // Bebida Alcoólica
             const alcoolica = "Bebida Alcoolica";
-            console.log("Bebida Alcoolica")
-            produtos.cadastrar(new BebidaAlcoolica(//A variável produtos acessa o método cadastrar em ProdutoController e cria um Produto
-                id, nome, tipo, alcoolica, preco));
-                 
-            break;//para o código após criar a conta
 
-        case 2: // bebida sem Alcool
+            produtos.cadastrar(
+                new BebidaAlcoolica(
+                    id,
+                    nome,
+                    tipo,
+                    preco,
+                    alcoolica
+                )
+            );
 
-             const sem_alcool = "Bebida Sem Alcool";
-            produtos.cadastrar(new BebidaSemAlcool(//A variável produtos acessa o método cadastrar em ProdutoController e cria um Produto
-                id, nome, tipo, preco, sem_alcool));
-          
-            break;//para o código após criar a conta
+            console.log("🍺 Bebida Alcoólica cadastrada com sucesso!");
+            break;
+        }
 
+        case 2: { // Bebida Sem Álcool
+            const sem_alcool = "Bebida Sem Alcool";
+
+            produtos.cadastrar(
+                new BebidaSemAlcool(
+                    id,
+                    nome,
+                    tipo,
+                    preco,
+                    sem_alcool
+                )
+            );
+
+            console.log("🥤 Bebida Sem Álcool cadastrada com sucesso!");
+            break;
+        }
     }
-
 }
 
 
@@ -138,7 +157,7 @@ function cadastrarProduto() {
 
 /* Opção 3: Procurar produtos pelo id */
 
-function  listarProdutoPorID(): void {
+function listarProdutoPorID(): void {
 
     console.log("Digite o ID do produto: ");//O usuário digita um id do produto
     const id = Input.questionInt("");//Esse id é adicionado a variável id
@@ -178,37 +197,52 @@ function atualizarProduto(): void {
         /**
          * Guarda os valores atuais do produto em variáveis
          */
-       
-        const id: number = produto.id; //Se o id existir, guarda o id
-        const nome: number = produto.nome; //Se o nome existir, guarda o nome
-        let preco: number = produto.preco; //Se o preço existir, guarda o preço 
-        const tipo: number = produto.tipo;
-        const alcoolica = "Bebida Alcoolica";
-        const sem_alcool = "Bebida Sem Alcool";
-
-        // Atualização o Preço
-        console.log(`\nPreço atual: ${formatarMoeda(preco)}`);//Exibe o saldo atual
-        console.log("Digite o novo preço: ");//Se pressionar ENTER o saldo atual será mantido
-        console.log("(Pressione ENTER para manter o valor atual)");//Para o ENTER funcionar, passamos o parâmetro  default input
-        preco = Input.questionFloat("", { defaultInput: preco });//default input, que indica o valor padrão (solução mais simples)
-
-        // Atualização do Tipo
-        switch (tipo) {
-            case 1: // Conta Corrente
-
-              
-                produtos.atualizar(new BebidaAlcoolica(id, nome, preco, tipo, alcoolica ));
-                //Instanciamos o método atualizar que está em ContaController e passamos os novos dados
-                break;//para o código após atualizar
-
-            case 2: // Conta Poupança
 
 
-                produtos.atualizar(new BebidaSemAlcool(id, nome, preco, tipo, sem_alcool ));
-                //Instanciamos o método atualizar que está em ContaController e passamos os novos dados
-                break;//para o código após atualizar 
+        let nome: string = produto.nome; //Se a conta existir, guarda o valor do titular em variáveis
+
+    console.log("Selecione o tipo de bebida: ");
+    const tipo = Input.keyInSelect(tipoBebidas, "", { cancel: false }) + 1;
+
+    console.log("Digite o preço do produto: ");
+    const preco = Input.questionFloat("");
+
+    switch (tipo) {
+
+        case 1: { // Bebida Alcoólica
+            const alcoolica = "Bebida Alcoolica";
+
+            produtos.atualizar(
+                new BebidaAlcoolica(
+                    id,
+                    nome,
+                    tipo,
+                    preco,
+                    alcoolica
+                )
+            );
+
+            console.log("🍺 Bebida Alcoólica atualizada com sucesso!");
+            break;
         }
 
+        case 2: { // Bebida Sem Álcool
+            const sem_alcool = "Bebida Sem Alcool";
+
+            produtos.atualizar(
+                new BebidaSemAlcool(
+                    id,
+                    nome,
+                    tipo,
+                    preco,
+                    sem_alcool
+                )
+            );
+
+            console.log("🥤 Bebida Sem Álcool atualizada com sucesso!");
+            break;
+        }
+    }
 
     } else {
         console.log(Colors.fg.red, `O Produto ${id} não foi encontrado!`, Colors.reset);
@@ -248,8 +282,8 @@ function keyPress(): void {
 /* Constas para Testes  */
 function criarProdutosTeste(): void {
 
-     //      cadastrar(conta: Conta)       id nome titular tipo  preço
-    produtos.cadastrar(new BebidaAlcoolica(id, 'Coca Cola',  1, 10));
+    //      cadastrar(conta: Conta)       id nome tipo preço alcoolica
+    produtos.cadastrar(new BebidaAlcoolica(1, 'Coca Cola', 1, 10, 'Bebida Alcoolica'));
     //produtos está pegando os métodos da classe ProdutoController(cadastrar) - const produtos = new ContaController();
     // new BebidaAlcoolica(...) Cria um objeto BebidaAlcoolica
     // id irá cadastrar o próximo id do produto no Array listaProdutos em ContaController.
@@ -260,8 +294,8 @@ function criarProdutosTeste(): void {
     // Produto cadastrado com sucesso
 
 
-     //      cadastrar(conta: Conta)       id nome titular tipo  preço
-    produtos.cadastrar(new BebidaSemAlcool(id, 'Skol',  1, 15));
+    //      cadastrar(conta: Conta)       id nome tipo preço sem_alcool
+    produtos.cadastrar(new BebidaSemAlcool(2, 'Skol', 2, 15, 'Bebida Sem Alcool'));
     //produtos está pegando os métodos da classe ProdutoController(cadastrar) - const produtos = new ContaController();
     // new BebidaSemAlcool(...) Cria um objeto BebidaSemAlcool
     // id irá cadastrar o próximo id do produto no Array listaProdutos em ContaController.

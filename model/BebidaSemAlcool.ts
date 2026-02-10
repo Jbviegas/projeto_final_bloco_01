@@ -33,7 +33,7 @@ export class BebidaSemAlcool extends Produto {//Isso significa: BebidaASemAlcool
     //Método visualizar sobrescrito(Polimorfismo)
     public visualizar(): void {
         super.visualizar();//Pega o método visualizar de Produto para exibir os dados do produto
-       console.log(`Limite da conta: R$ ${(this._sem_alcool)}`)//this.sem_alcool acessa o método get sem_alcool para exibir o tipo de bebida 
+       console.log(`Tipo de produto: R$ ${(this._sem_alcool)}`)//this.sem_alcool acessa o método get sem_alcool para exibir o tipo de bebida 
     }
 
 }
