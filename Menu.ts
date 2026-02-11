@@ -127,7 +127,7 @@ function cadastrarProduto(): void {
                 )
             );
 
-            console.log("🍺 Bebida Alcoólica cadastrada com sucesso!");
+            console.log(`🍺 Bebida Alcoólica ${nome}, ID ${id}, cadastrada com sucesso!`);
             break;
         }
 
@@ -199,6 +199,8 @@ function atualizarProduto(): void {
 
         const nome: string = produto.nome; //Se o produto existir, guarda o nome do produto
         const tipo: number = produto.tipo; //Se o produto existir, guarda o nome do produto
+        const alcoolica = "Bebida Alcoolica";
+        const sem_alcool = "Bebida Sem alcool";
 
 
 
@@ -207,12 +209,12 @@ function atualizarProduto(): void {
         const preco = Input.questionFloat("");
 
         if (produto.tipo === 1) {
-            produtos.atualizar(new BebidaAlcoolica(id, nome, tipo, preco, "Bebida Alcoolica"));
-             console.log(Colors.fg.green,`O Produto 🥤 Bebida Alcoolica ${nome} ID Número ${id}, foi atualizado com sucesso!`,Colors.reset);
+            produtos.atualizar(new BebidaAlcoolica(id, nome, tipo, preco, alcoolica));
+             console.log(Colors.fg.green,`O Produto 🥤 Bebida Alcoolica ${nome}, ID ${id}, foi atualizado com sucesso!`,Colors.reset);
 
         } else if (produto.tipo === 2) {
-            produtos.atualizar(new BebidaSemAlcool(id, nome, tipo, preco, "Bebida Sem Alcool"));
-             console.log(Colors.fg.green, `O Produto 🥤 Bebida Sem Alcool ${nome} ID Número ${id}, foi atualizado com sucesso!`,Colors.reset);
+            produtos.atualizar(new BebidaSemAlcool(id, nome, tipo, preco, sem_alcool));
+             console.log(Colors.fg.green, `O Produto 🥤 Bebida Sem Alcool ${nome}, ID ${id}, foi atualizado com sucesso!`,Colors.reset);
 
     } else {
         console.log(Colors.fg.red, `O Produto ${id} não foi encontrado!`, Colors.reset);

@@ -21,10 +21,7 @@ export class ProdutoController implements ProdutoRepository {
     cadastrar(produto: Produto): void {
         this.listaProdutos.push(produto);//this.listaContas → é um array de contas (private listaContas: Array<Conta>) = [];
         //push(conta) → adiciona a conta no final do array
-        console.log(Colors.fg.green,
-            `\nO Produto ID número ${produto.id} foi cadastrado com sucesso!`, Colors.reset);
-        // Exibe uma mensagem no terminal Usa cores para deixar o texto verde
-        //  conta.numero acessa o número da conta criada
+       
     }
 
 
