@@ -91,7 +91,7 @@ export abstract class Produto {
         }
 
         console.log("\n===============================");
-        console.log("\nDados da Conta:");
+        console.log("\nDados do Produto:");
         console.log("===============================\n");
         console.log(`ID do Produto: ${this._id}`);//Acessa o método get id, acessa o numero do produto e exibe no painel
         console.log(`Nome do Produto: ${this._nome}`);//Acessa o método get nome, acessa o nome do produto e exibe no painel

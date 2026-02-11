@@ -3,6 +3,7 @@ import { Input } from "./src/util/Input";
 import { ProdutoController } from "./controller/ProdutoController";
 import { BebidaAlcoolica } from "./model/BebidaAlcoolica";
 import { BebidaSemAlcool } from "./model/BebidaSemAlcool";
+import { Produto } from "./model/Produto";
 
 
 
@@ -12,9 +13,6 @@ import { BebidaSemAlcool } from "./model/BebidaSemAlcool";
 //Criar um objeto global da classe ContaController
 const produtos = new ProdutoController();//Permite a constante produtos acessar ContaController e instanciar seus métodos 
 
-
-// Criar um array contendo os tipos de conta
-const tipoProdutos = ['Bebida Alcoolica', 'bebida Sem Alcool'];
 
 
 // Criar um array contendo os tipos de conta
@@ -64,7 +62,7 @@ export function main() {
                 console.log(Colors.fg.whitestrong, "\n\nListar Todos os Produtos\n\n", Colors.reset);
 
                 produtos.listarProdutos();
-                 keyPress()
+                keyPress()
                 break;
 
             case 3:
@@ -199,54 +197,27 @@ function atualizarProduto(): void {
          */
 
 
-        let nome: string = produto.nome; //Se a conta existir, guarda o valor do titular em variáveis
+        const nome: string = produto.nome; //Se o produto existir, guarda o nome do produto
+        const tipo: number = produto.tipo; //Se o produto existir, guarda o nome do produto
 
-    console.log("Selecione o tipo de bebida: ");
-    const tipo = Input.keyInSelect(tipoBebidas, "", { cancel: false }) + 1;
 
-    console.log("Digite o preço do produto: ");
-    const preco = Input.questionFloat("");
 
-    switch (tipo) {
 
-        case 1: { // Bebida Alcoólica
-            const alcoolica = "Bebida Alcoolica";
+        console.log("Digite o preço do produto: ");
+        const preco = Input.questionFloat("");
 
-            produtos.atualizar(
-                new BebidaAlcoolica(
-                    id,
-                    nome,
-                    tipo,
-                    preco,
-                    alcoolica
-                )
-            );
+        if (produto.tipo === 1) {
+            produtos.atualizar(new BebidaAlcoolica(id, nome, tipo, preco, "Bebida Alcoolica"));
+             console.log(Colors.fg.green,`O Produto 🥤 Bebida Alcoolica ${nome} ID Número ${id}, foi atualizado com sucesso!`,Colors.reset);
 
-            console.log("🍺 Bebida Alcoólica atualizada com sucesso!");
-            break;
-        }
-
-        case 2: { // Bebida Sem Álcool
-            const sem_alcool = "Bebida Sem Alcool";
-
-            produtos.atualizar(
-                new BebidaSemAlcool(
-                    id,
-                    nome,
-                    tipo,
-                    preco,
-                    sem_alcool
-                )
-            );
-
-            console.log("🥤 Bebida Sem Álcool atualizada com sucesso!");
-            break;
-        }
-    }
+        } else if (produto.tipo === 2) {
+            produtos.atualizar(new BebidaSemAlcool(id, nome, tipo, preco, "Bebida Sem Alcool"));
+             console.log(Colors.fg.green, `O Produto 🥤 Bebida Sem Alcool ${nome} ID Número ${id}, foi atualizado com sucesso!`,Colors.reset);
 
     } else {
         console.log(Colors.fg.red, `O Produto ${id} não foi encontrado!`, Colors.reset);
     }
+}
 }
 
 

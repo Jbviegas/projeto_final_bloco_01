@@ -65,8 +65,6 @@ export class ProdutoController implements ProdutoRepository {
             this.listaProdutos[this.listaProdutos.indexOf(buscaProduto)] = produto;
             /*Acessa o Array de contas this.listaContas, depois acessa o indice da conta através do numero da conta indexOf(buscaConta) 
             e envia todos os dados atualizados que vinheram do Menu para a mesma conta -> = conta*/
-            console.log(Colors.fg.green,
-                `\nO Produto ID número ${produto.id} foi Atualizado com Sucesso!`, Colors.reset);
         } else
             console.log(Colors.fg.red, "\nProduto não Encontrado!", Colors.reset);
     }
